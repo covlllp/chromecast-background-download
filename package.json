@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "babel-node index"
+    "download": "babel-node index"
   },
   "dependencies": {
     "babel-preset-env": "^1.7.0",
