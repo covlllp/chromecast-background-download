@@ -37,8 +37,23 @@ function downloadUrl(url, index) {
     });
 }
 
-getChromecastImageUrls().then(urls => {
-  for (let i = 0, len = 5; i < len; i++) {
-    downloadUrl(urls[i], i);
+function parallelDownloadUrls(urls) {
+  const limit = 5;
+  let index;
+
+  const onDone = () => {
+    if (index >= urls.length) return;
+    downloadUrl(urls[index], index).then(onDone);
+    // eslint-disable-next-line no-plusplus
+    index++;
+  };
+
+  // eslint-disable-next-line no-plusplus
+  for (index = 0; index < limit; index++) {
+    downloadUrl(urls[index], index).then(onDone);
   }
+}
+
+getChromecastImageUrls().then(urls => {
+  parallelDownloadUrls(urls);
 });
