@@ -1,6 +1,7 @@
 import fetch from 'node-fetch';
 import download from 'image-downloader';
 import { homedir } from 'os';
+import stringHash from 'string-hash';
 
 const REGEX_EXPRESSION = /(JSON\.parse\('.+'\))\)\./;
 
@@ -21,11 +22,12 @@ async function getChromecastImageUrls() {
   return matches[0].map(match => match[0]);
 }
 
-function downloadUrl(url, index) {
+function downloadUrl(url) {
+  const fileHash = stringHash(url);
   return download
     .image({
       url,
-      dest: `${IMAGE_FOLDER_DEST}/chromecast_image_${index}.jpg`,
+      dest: `${IMAGE_FOLDER_DEST}/chromecast_image_${fileHash}.jpg`,
     })
     .then(({ filename }) => {
       // eslint-disable-next-line no-console
@@ -43,14 +45,14 @@ function parallelDownloadUrls(urls) {
 
   const onDone = () => {
     if (index >= urls.length) return;
-    downloadUrl(urls[index], index).then(onDone);
+    downloadUrl(urls[index]).then(onDone);
     // eslint-disable-next-line no-plusplus
     index++;
   };
 
   // eslint-disable-next-line no-plusplus
   for (index = 0; index < limit; index++) {
-    downloadUrl(urls[index], index).then(onDone);
+    downloadUrl(urls[index]).then(onDone);
   }
 }
 
