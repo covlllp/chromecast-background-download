@@ -3,7 +3,8 @@ import download from 'image-downloader';
 import { homedir } from 'os';
 import stringHash from 'string-hash';
 
-const REGEX_EXPRESSION = /(JSON\.parse\('.+'\))\)\./;
+// const REGEX_EXPRESSION = /(JSON\.parse\('.+'\))\)\./;
+const REGEX_EXPRESSION = /JSON\.parse.+?(?=\. con)/;
 
 const IMAGE_FOLDER_DEST = `${homedir()}/Pictures`;
 
@@ -14,10 +15,18 @@ function fetchChromecastBodyText() {
 }
 
 async function getChromecastImageUrls() {
-  // from https://github.com/dconnolly/chromecast-backgrounds
+  // from https://github.com/dconnolly/chromecast-backgrounds, kind of
   const text = await fetchChromecastBodyText();
-  // eslint-disable-next-line no-eval
-  const matches = eval(text.match(REGEX_EXPRESSION)[1]);
+  const initParse = text.match(REGEX_EXPRESSION)[0];
+  let matches;
+  try {
+    // eslint-disable-next-line no-eval
+    matches = eval(initParse);
+  } catch (err) {
+    // Sometimes the regex captures an extra parens
+    // eslint-disable-next-line no-eval
+    matches = eval(initParse.slice(0, -1));
+  }
 
   return matches[0].map(match => match[0]);
 }
@@ -56,6 +65,11 @@ function parallelDownloadUrls(urls) {
   }
 }
 
-getChromecastImageUrls().then(urls => {
-  parallelDownloadUrls(urls);
-});
+getChromecastImageUrls()
+  .then(urls => {
+    parallelDownloadUrls(urls);
+  })
+  .catch(err => {
+    // eslint-disable-next-line no-console
+    console.error(err);
+  });
