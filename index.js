@@ -1,17 +1,16 @@
-import fetch from 'node-fetch';
+import rp from 'request-promise';
 import download from 'image-downloader';
 import { homedir } from 'os';
+import { existsSync } from 'fs';
 import stringHash from 'string-hash';
 
 // const REGEX_EXPRESSION = /(JSON\.parse\('.+'\))\)\./;
 const REGEX_EXPRESSION = /JSON\.parse.+?(?=\. con)/;
 
-const IMAGE_FOLDER_DEST = `${homedir()}/Pictures`;
+const IMAGE_FOLDER_DEST = `${homedir()}/Dropbox/Computer/Chromecast`;
 
 function fetchChromecastBodyText() {
-  return fetch('https://clients3.google.com/cast/chromecast/home').then(res =>
-    res.text(),
-  );
+  return rp('https://clients3.google.com/cast/chromecast/home');
 }
 
 async function getChromecastImageUrls() {
@@ -33,10 +32,19 @@ async function getChromecastImageUrls() {
 
 function downloadUrl(url) {
   const fileHash = stringHash(url);
+  const fileName = `chromecast_image_${fileHash}.jpg`;
+  const filePath = `${IMAGE_FOLDER_DEST}/${fileName}`;
+  if (existsSync(filePath)) {
+    return Promise.resolve().then(() => {
+      // eslint-disable-next-line no-console
+      console.log(`${fileName} already exists`);
+    });
+  }
+
   return download
     .image({
       url,
-      dest: `${IMAGE_FOLDER_DEST}/chromecast_image_${fileHash}.jpg`,
+      dest: filePath,
     })
     .then(({ filename }) => {
       // eslint-disable-next-line no-console
