@@ -7,7 +7,7 @@ import stringHash from 'string-hash';
 // const REGEX_EXPRESSION = /(JSON\.parse\('.+'\))\)\./;
 const REGEX_EXPRESSION = /JSON\.parse.+?(?=\. con)/;
 
-const IMAGE_FOLDER_DEST = `${homedir()}/Dropbox/Computer/Chromecast`;
+const IMAGE_FOLDER_DEST = `${homedir()}/Dropbox/Pictures/Chromecast`;
 
 function fetchChromecastBodyText() {
   return rp('https://clients3.google.com/cast/chromecast/home');
