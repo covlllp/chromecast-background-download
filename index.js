@@ -4,7 +4,6 @@ import { homedir } from 'os';
 import { existsSync } from 'fs';
 import stringHash from 'string-hash';
 
-// const REGEX_EXPRESSION = /(JSON\.parse\('.+'\))\)\./;
 const REGEX_EXPRESSION = /JSON\.parse.+?(?=\. con)/;
 
 const IMAGE_FOLDER_DEST = `${homedir()}/Dropbox/Pictures/Chromecast`;
@@ -27,7 +26,7 @@ async function getChromecastImageUrls() {
     matches = eval(initParse.slice(0, -1));
   }
 
-  return matches[0].map(match => match[0]);
+  return matches[0].map((match) => match[0]);
 }
 
 function downloadUrl(url) {
@@ -50,7 +49,7 @@ function downloadUrl(url) {
       // eslint-disable-next-line no-console
       console.log(`File saved to ${filename}`);
     })
-    .catch(err => {
+    .catch((err) => {
       // eslint-disable-next-line no-console
       console.error(err);
     });
@@ -74,10 +73,10 @@ function parallelDownloadUrls(urls) {
 }
 
 getChromecastImageUrls()
-  .then(urls => {
+  .then((urls) => {
     parallelDownloadUrls(urls);
   })
-  .catch(err => {
+  .catch((err) => {
     // eslint-disable-next-line no-console
     console.error(err);
   });
