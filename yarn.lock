@@ -1527,9 +1527,9 @@ __metadata:
   linkType: hard
 
 "decode-uri-component@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "decode-uri-component@npm:0.2.0"
-  checksum: f3749344ab9305ffcfe4bfe300e2dbb61fc6359e2b736812100a3b1b6db0a5668cba31a05e4b45d4d63dbf1a18dfa354cd3ca5bb3ededddabb8cd293f4404f94
+  version: 0.2.2
+  resolution: "decode-uri-component@npm:0.2.2"
+  checksum: 95476a7d28f267292ce745eac3524a9079058bbb35767b76e3ee87d42e34cd0275d2eb19d9d08c3e167f97556e8a2872747f5e65cbebcac8b0c98d83e285f139
   languageName: node
   linkType: hard
 
@@ -2252,7 +2252,7 @@ __metadata:
 
 "fsevents@patch:fsevents@^1.0.0#~builtin<compat/fsevents>":
   version: 1.2.13
-  resolution: "fsevents@patch:fsevents@npm%3A1.2.13#~builtin<compat/fsevents>::version=1.2.13&hash=d11327"
+  resolution: "fsevents@patch:fsevents@npm%3A1.2.13#~builtin<compat/fsevents>::version=1.2.13&hash=18f3a7"
   dependencies:
     bindings: ^1.5.0
     nan: ^2.12.1
@@ -4328,7 +4328,7 @@ __metadata:
 
 "resolve@patch:resolve@^1.5.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.6.0#~builtin<compat/resolve>":
   version: 1.8.1
-  resolution: "resolve@patch:resolve@npm%3A1.8.1#~builtin<compat/resolve>::version=1.8.1&hash=3bafbf"
+  resolution: "resolve@patch:resolve@npm%3A1.8.1#~builtin<compat/resolve>::version=1.8.1&hash=07638b"
   dependencies:
     path-parse: ^1.0.5
   checksum: b7e0748492c5c5a3bacd94b8ef8f52b529dbfea264ed560f352cb5c93ebc92bd8ab072843ff3af775133bdfa3d4b80d3b5a49382ff7457d026e97e2925410fc3
